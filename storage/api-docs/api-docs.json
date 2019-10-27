@@ -1,0 +1,360 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Mitrais Test API",
+        "contact": {
+            "email": "firman.alhadiansyah@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate a user and return the token if the provided credentials are correct.",
+                "operationId": "App\\Http\\Controllers\\AuthController::authenticate",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "username": "webdev@mailinator.com",
+                                    "password": "secret@123"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": true,
+                                        "status": 200,
+                                        "message": null,
+                                        "data": {
+                                            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsdW1lbi1qd3QiLCJzdWIiOjIsImlhdCI6MTU2MDkwNTQyNywiZXhwIjoxNTYwOTkxODI3fQ.dU-BsGjUKIK7HjeS9YbFjECYK9dOrePnRVqK0vhD_ZM",
+                                            "user": {
+                                                "id": 2,
+                                                "role_id": 2,
+                                                "email": "webdev@mailinator.com",
+                                                "handphone": "081234567891",
+                                                "first_name": "Web",
+                                                "last_name": "developer",
+                                                "api_token": null,
+                                                "remember_token": null,
+                                                "confirmation_code": "bAGTY90Ov4tCMsbxCyBq",
+                                                "confirmed_at": "2019-06-19 07:30:16",
+                                                "created_at": "2019-06-19 07:30:16",
+                                                "updated_at": "2019-06-19 07:30:16"
+                                            }
+                                        },
+                                        "exceptions": null
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": false,
+                                        "status": 400,
+                                        "message": "Missing required field(s)",
+                                        "data": null,
+                                        "exceptions": {
+                                            "username": [
+                                                "The email field is required."
+                                            ],
+                                            "password": [
+                                                "The password field is required."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Fatal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": false,
+                                        "status": 500,
+                                        "message": "HTTP_INTERNAL_SERVER_ERROR",
+                                        "data": null,
+                                        "exceptions": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Registration",
+                "description": "",
+                "operationId": "App\\Http\\Controllers\\AuthController::register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "first_name",
+                                    "last_name"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "number"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    },
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "birth_date": {
+                                        "type": "date"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "phone": "081234567892",
+                                    "email": "userdev1@mailinator.com",
+                                    "password": "secret@123",
+                                    "password_confirmation": "secret@123",
+                                    "first_name": "userdev1",
+                                    "last_name": "test",
+                                    "birth_date": "2000-02-02"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": true,
+                                        "status": 200,
+                                        "message": "New Daop Successfully Created",
+                                        "data": {
+                                            "id": 12,
+                                            "role_id": 4,
+                                            "email": "userdev6@mailinator.com",
+                                            "username": "userdev6",
+                                            "id_path": "http://apiabm.local/storage/user/images/1547451840-download.jpg",
+                                            "updated_at": "2019-01-14 07:44:01",
+                                            "created_at": "2019-01-14 07:44:01"
+                                        },
+                                        "exceptions": null
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": false,
+                                        "status": 400,
+                                        "message": "Error(s) occured when validating field(s)",
+                                        "data": null,
+                                        "exceptions": {
+                                            "email": [
+                                                "The email field is required."
+                                            ],
+                                            "password": [
+                                                "The password field is required."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Fatal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "status": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string|null"
+                                        },
+                                        "data": {
+                                            "type": "array|object|null"
+                                        },
+                                        "exceptions": {
+                                            "type": "array|object|null"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "success": false,
+                                        "status": 500,
+                                        "message": "HTTP_INTERNAL_SERVER_ERROR",
+                                        "data": null,
+                                        "exceptions": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "access-token": {
+                "type": "apiKey",
+                "name": "access-token",
+                "in": "header"
+            }
+        }
+    }
+}
